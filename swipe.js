@@ -53,13 +53,11 @@ function Swipe(container, options) {
             slides = element.children;
         }
 
-        if (options.pagination) {
+        if ((options.pagination) && !(document.getElementById(options.pagination).hasChildNodes())) {
 
             var paginationContainer = document.getElementById(options.pagination),
                 pagIndex = 0;
             pagButtons = [];
-
-            paginationContainer.innerHtml = '';
 
             while ((pagIndex++) < slides.length) {
                 var pagButton = document.createElement('button');
