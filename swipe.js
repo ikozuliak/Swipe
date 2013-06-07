@@ -187,31 +187,32 @@ function Swipe(container, options) {
         }
 
         // toggle class for pagination buttons
-        if (event) {
-            var siblings = [].slice.call(event.parentNode.children) // convert to array
-                .filter(function (v) {
-                    return v !== event
-                });
-            // remove element itself;
-            var i = siblings.length;
-            while ((i--) > 0) {
-                siblings[i].className = siblings[i].className.replace(/(?:^|\s)active(?!\S)/g, '')
+        if (options.pagination)
+            if (event) {
+                var siblings = [].slice.call(event.parentNode.children)// convert to array
+                    .filter(function (v) {
+                        return v !== event
+                    });
+                // remove element itself;
+                var i = siblings.length;
+                while ((i--) > 0) {
+                    siblings[i].className = siblings[i].className.replace(/(?:^|\s)active(?!\S)/g, '')
+                }
+                event.className += ' active';
             }
-            event.className += ' active';
-        }
-        else if(document.getElementById(options.pagination).hasChildNodes()){
+            else if (document.getElementById(options.pagination).hasChildNodes()) {
 
-            var siblings = [].slice.call(document.getElementById(options.pagination).children) // convert to array
-                .filter(function (v) {
-                    return v !== event
-                });
-            // remove element itself;
-            var i = siblings.length;
-            while ((i--) > 0) {
-                siblings[i].className = siblings[i].className.replace(/(?:^|\s)active(?!\S)/g, '')
+                var siblings = [].slice.call(document.getElementById(options.pagination).children)// convert to array
+                    .filter(function (v) {
+                        return v !== event
+                    });
+                // remove element itself;
+                var i = siblings.length;
+                while ((i--) > 0) {
+                    siblings[i].className = siblings[i].className.replace(/(?:^|\s)active(?!\S)/g, '')
+                }
+                siblings[to].className += ' active';
             }
-            siblings[to].className += ' active';
-        }
     }
 
     function move(index, dist, speed) {
