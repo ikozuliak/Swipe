@@ -59,14 +59,15 @@ function Swipe(container, options) {
                 pagIndex = 0;
             pagButtons = [];
 
-            while ((pagIndex++) < slides.length - 1) {
+            paginationContainer.innerHtml = '';
+
+            while ((pagIndex++) < slides.length) {
                 var pagButton = document.createElement('button');
                 pagButton.innerHTML = pagIndex;
-                pagButton.className = 'test';
                 paginationContainer.appendChild(pagButton);
 
                 // Add event
-                pagButton.onclick = goTo(pagIndex);
+                pagButton.onclick = goTo(pagIndex-1);
                 pagButtons[pagIndex] = pagButton;
 
             }
@@ -181,9 +182,9 @@ function Swipe(container, options) {
         if (options.pagination) {
             var i = pagButtons.length;
             while ((i--) > 1) {
-                    pagButtons[i].className = pagButtons[i].className.replace( /(?:^|\s)active(?!\S)/g , '' )
+                pagButtons[i].className = pagButtons[i].className.replace( /(?:^|\s)active(?!\S)/g , '' )
             }
-            pagButtons[to].className += ' active';
+            pagButtons[to+1].className += ' active';
         }
     }
 
