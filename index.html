@@ -65,11 +65,16 @@
 
 <div style='text-align:center;padding-top:20px;'>
   
-  <button onclick='mySwipe.prev()'>prev</button> 
+  <button onclick='mySwipe.slideTo(2)'>prev</button>
   <button onclick='mySwipe.next()'>next</button>
 
 </div>
 
+<div style='text-align:center;padding-top:20px; ' id="swipe-pagination">
+
+
+
+</div>
 
 
 
@@ -80,6 +85,7 @@
 // pure JS
 var elem = document.getElementById('mySwipe');
 window.mySwipe = Swipe(elem, {
+    pagination: 'swipe-pagination'
   // startSlide: 4,
   // auto: 3000,
   // continuous: true,
