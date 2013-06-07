@@ -65,7 +65,7 @@ function Swipe(container, options) {
                 paginationContainer.appendChild(pagButton);
 
                 // Add event
-                pagButton.onclick = goTo(pagIndex-1);
+                pagButton.onclick = goTo(pagIndex - 1);
                 pagButtons[pagIndex] = pagButton;
 
             }
@@ -135,7 +135,8 @@ function Swipe(container, options) {
 
     }
 
-    function slideTo(to, slideSpeed) {
+    function slideTo(to, slideSpeed, event) {
+
 
         // do nothing if already on requested slide
         if (index == to) return;
@@ -177,12 +178,39 @@ function Swipe(container, options) {
         index = to;
         offloadFn(options.callback && options.callback(index, slides[index]));
 
-        if (options.pagination) {
+        if (options.pagination && !(document.getElementById(options.pagination).hasChildNodes())) {
             var i = pagButtons.length;
             while ((i--) > 1) {
-                pagButtons[i].className = pagButtons[i].className.replace( /(?:^|\s)active(?!\S)/g , '' )
+                pagButtons[i].className = pagButtons[i].className.replace(/(?:^|\s)active(?!\S)/g, '')
             }
-            pagButtons[to+1].className += ' active';
+            pagButtons[to + 1].className += ' active';
+        }
+
+        // toggle class for pagination buttons
+        if (event) {
+            var siblings = [].slice.call(event.parentNode.children) // convert to array
+                .filter(function (v) {
+                    return v !== event
+                });
+            // remove element itself;
+            var i = siblings.length;
+            while ((i--) > 0) {
+                siblings[i].className = siblings[i].className.replace(/(?:^|\s)active(?!\S)/g, '')
+            }
+            event.className += ' active';
+        }
+        else if(document.getElementById(options.pagination).hasChildNodes()){
+
+            var siblings = [].slice.call(document.getElementById(options.pagination).children) // convert to array
+                .filter(function (v) {
+                    return v !== event
+                });
+            // remove element itself;
+            var i = siblings.length;
+            while ((i--) > 0) {
+                siblings[i].className = siblings[i].className.replace(/(?:^|\s)active(?!\S)/g, '')
+            }
+            siblings[to].className += ' active';
         }
     }
 
@@ -520,12 +548,12 @@ function Swipe(container, options) {
             setup();
 
         },
-        slideTo:function (to, speed) {
+        slideTo:function (to, speed, event) {
 
             // cancel slideshow
             stop();
 
-            slideTo(to, speed);
+            slideTo(to, speed, event);
 
         },
         prev:function () {
